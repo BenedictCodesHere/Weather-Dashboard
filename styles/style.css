@@ -1,0 +1,111 @@
+:root {
+    --gradient-std: linear-gradient(
+        90deg,
+        rgb(113, 110, 177) 4%,
+         rgb(92, 119, 218) 21%,
+          rgba(44, 184, 212, 0.719) 30%,
+          rgba(111, 231, 255, 0.925) 40%,
+          rgba(214, 248, 255, 0.959) 50%,
+          rgba(111, 231, 255, 0.925) 60%,
+          rgba(44, 184, 212, 0.719) 70%,
+          rgb(127, 152, 245) 79%,
+          rgb(113, 110, 177) 96%
+    );
+    --gradient-hov: linear-gradient(
+        90deg,
+        rgb(54, 47, 173) 4%,
+         rgba(9,34,121,1) 21%,
+          rgba(44, 184, 212, 0.719) 30%,
+          rgba(86, 252, 183, 0.719) 40%,
+          rgba(111, 231, 255, 0.925) 40%,
+          rgba(224, 250, 255, 0.959) 50%,
+          rgba(111, 231, 255, 0.925) 60%,
+          rgba(44, 184, 212, 0.719) 70%,
+          rgba(86, 252, 183, 0.719) 60%,
+          rgba(9,34,121,1) 21%,
+          rgb(54, 47, 173) 4%
+    );
+    --time-fn: linear;
+}
+
+@keyframes bg-animation {
+    0% {background-position: left
+    }
+    100% {
+        background-position:right;
+    }
+}
+
+body {
+    background-image: var(--gradient-std);
+    background-size: 800%;
+    animation: bg-animation 45s infinite;
+    color: rgb(255, 255, 255);
+
+}
+#search-button {
+    color: white;
+    background: rgb(93, 163, 187);
+}
+#search-button:hover {
+    color: white;
+    background: rgb(100, 100, 228);
+}
+
+#today {
+    border: 1px solid black;
+}
+
+h3 {
+    margin-top: 15px;
+}
+
+/* .weather-hr {
+    border: 1px solid black;
+} */
+
+h1 {
+    background-image: var(--gradient-std);
+    background-size: 400%;
+    animation: bg-animation 15s infinite alternate;
+}
+.btn-styled, .card {
+    border: 1px solid black;
+    padding: 0.5em;
+    margin: 5px;
+    box-shadow: 2px 2px 9px 3px rgb(100, 100, 228);
+    color: rgb(255, 149, 87);
+    font-weight: 500;
+    background-image: var(--gradient-std);
+    background-size: 350%;
+    opacity: 1;
+    background-position: left;
+    transition-duration: 0.5s;
+    transition-property: background-position, opacity, color, font-weight, font-size;
+    transition-timing-function: var(--time-fn);
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+    font-size: 1em;
+    
+}
+
+.card:focus, .card:hover, .btn-styled:hover, .btn-styled:focus {
+    border: 1px solid black;
+    box-shadow: -3px -3px 9px 4px rgb(100, 228, 200);
+    background-position: top;    
+    color: rgba(248, 190, 81, 0.884);
+    opacity: 1;
+    font-weight: 700;
+    font-size: 1.1em;
+    
+    
+}
+
+.card:first-of-type {
+    margin-left: 15px !important;
+}
+
+
+.btn-styled:active {
+    background-color: rgb(224, 240, 11) !important;
+    transition: 1s linear;
+}
