@@ -5,25 +5,21 @@
          rgb(92, 119, 218) 21%,
           rgba(44, 184, 212, 0.719) 30%,
           rgba(111, 231, 255, 0.925) 40%,
-          rgba(214, 248, 255, 0.959) 50%,
+          rgba(193, 216, 221, 0.959) 50%,
           rgba(111, 231, 255, 0.925) 60%,
           rgba(44, 184, 212, 0.719) 70%,
           rgb(127, 152, 245) 79%,
           rgb(113, 110, 177) 96%
     );
-    --gradient-hov: linear-gradient(
-        90deg,
-        rgb(54, 47, 173) 4%,
-         rgba(9,34,121,1) 21%,
+    --gradient-hov: radial-gradient(
+        circle at center,
+        rgb(54, 47, 173) 0%,
+         rgb(250, 153, 62) 21%,
           rgba(44, 184, 212, 0.719) 30%,
           rgba(86, 252, 183, 0.719) 40%,
-          rgba(111, 231, 255, 0.925) 40%,
-          rgba(224, 250, 255, 0.959) 50%,
-          rgba(111, 231, 255, 0.925) 60%,
-          rgba(44, 184, 212, 0.719) 70%,
-          rgba(86, 252, 183, 0.719) 60%,
-          rgba(9,34,121,1) 21%,
-          rgb(54, 47, 173) 4%
+          rgb(163, 223, 25) 61%,
+          rgba(111, 231, 255, 0.925) 70%,
+          rgba(224, 250, 255, 0.959) 100%
     );
     --time-fn: linear;
 }
@@ -76,9 +72,9 @@ h3 {
 } */
 
 h1 {
-    background-image: var(--gradient-std);
+    background-image: var(--gradient-hov);
     background-size: 400%;
-    animation: bg-animation 15s infinite alternate;
+    animation: bg-animation 45s infinite alternate;
 }
 .btn-styled, .card, #today {
     border: 1px solid black;
@@ -110,11 +106,14 @@ h1 {
     border: 1px solid black;
     box-shadow: -3px -3px 9px 4px rgb(100, 228, 200);
     background-position: top;    
-    color: rgba(248, 190, 81, 0.884);
+    color: rgba(238, 174, 55, 0.884);
     opacity: 1;
     font-weight: 700;
     font-size: 1.1em;
 }
+
+
+
 
 .card:first-of-type {
     margin-left: 15px !important;
@@ -124,4 +123,9 @@ h1 {
 .btn-styled:active {
     background-color: rgb(224, 240, 11) !important;
     transition: 1s linear;
+}
+
+
+.hidden {
+    display: none;
 }

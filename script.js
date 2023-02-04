@@ -13,6 +13,24 @@ if (localStorage.getItem('cities') != null) {
     cities = newCities;
 }
 
+function renderButtons() {
+
+
+    $('.list-group').empty();
+
+    for (let i = 0; i < cities.length; i++) {
+        var buttonText = cities[i].currentCityName.toUpperCase();
+        console.log(buttonText);
+        var newBtn = $('<button>');
+        newBtn.addClass('btn-styled');
+        newBtn.attr('data-number', i);
+        newBtn.attr('data-name', cities[i].currentCityName);
+        newBtn.text(buttonText);
+        newBtn.appendTo('.list-group');
+    }
+}
+
+renderButtons();
 
 $('.form').on('submit', function(event) {
     event.preventDefault();
@@ -45,6 +63,19 @@ method: "GET"
         alert('Not a city, mate. Not a city.')
         return;
     }
+
+    var allCityNames = [];
+    for (let i = 0; i < cities.length; i++) {
+        var thisIsCity = cities[i].currentCityName;
+        allCityNames.push(thisIsCity);
+    }
+    var evaluatingCity = firstResponse[0].name;
+    const checkIt = allCityNames.find(name => name === evaluatingCity)
+    if (checkIt != undefined) {
+        return;
+    }
+        
+    
     console.log(firstResponse);
 console.log(firstResponse[0].lat)
 
@@ -62,28 +93,12 @@ var currentCity = {
     currentLongitude: currentLongitude
 }
 
-
 cities.push(currentCity);
 
 console.log(cities);
 localStorage.setItem('cities', JSON.stringify(cities));
 
-function renderButtons() {
 
-
-    $('.list-group').empty();
-
-    for (let i = 0; i < cities.length; i++) {
-        var buttonText = cities[i].currentCityName.toUpperCase();
-        console.log(buttonText);
-        var newBtn = $('<button>');
-        newBtn.addClass('btn-styled');
-        newBtn.attr('data-number', i);
-        newBtn.attr('data-name', cities[i].currentCityName);
-        newBtn.text(buttonText);
-        newBtn.appendTo('.list-group');
-    }
-}
 
 renderButtons();
 
@@ -179,6 +194,12 @@ let callTheApi = function(currentLatitudeX, currentLongitudeY, currentCityZ) {
                 console.log(imgDiv);
                 imgDiv.attr('src', dayArray[5]);
 
+                if (imgDiv.hasClass('hidden')) {
+                    imgDiv.removeClass('hidden');
+                    imgDiv.addClass('show');
+                }
+                
+
                 var tempP = cardBody.children().eq(1);
                 var windP = cardBody.children().eq(2);
                 var humidityP = cardBody.children().eq(3);
@@ -239,3 +260,4 @@ function displayWeatherInfo() {
 }
 
 $(document).on('click', ".btn-styled", displayWeatherInfo); 
+
