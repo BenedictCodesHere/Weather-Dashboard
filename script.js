@@ -1,10 +1,10 @@
 // 
 
 
-var button = $('<button>');
-$(button).addClass('btn btn-styled')
-$(button).text('LONDON');
-$(button).appendTo('.list-group');
+// var button = $('<button>');
+// $(button).addClass('btn btn-styled')
+// $(button).text('LONDON');
+// $(button).appendTo('.list-group');
 
 var cities = [];
 
@@ -54,54 +54,174 @@ var currentCity = {
 cities.push(currentCity);
 
 console.log(cities);
-var buttonText = currentCityName.toUpperCase();
-console.log(buttonText);
-var newBtn = $('<button>');
-newBtn.appendTo('.list-group');
-newBtn.text(buttonText);
-newBtn.addClass('btn-styled');
+
+function renderButtons() {
+
+    $('.list-group').empty();
+
+    for (let i = 0; i < cities.length; i++) {
+        var buttonText = cities[i].currentCityName.toUpperCase();
+        console.log(buttonText);
+        var newBtn = $('<button>');
+        newBtn.addClass('btn-styled');
+        newBtn.attr('data-number', i);
+        newBtn.attr('data-name', cities[i].currentCityName);
+        newBtn.text(buttonText);
+        newBtn.appendTo('.list-group');
+    }
+}
+
+renderButtons();
+
 $('.form-input').val('');
 
 
-let callTheApi = function() {
-    var queryURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + currentLatitude + '&lon=' + currentLongitude + '&appid=f2e440a79117f6995bf30b0b003b5680&units=metric';
+
+
+callTheApi(currentLatitude, currentLongitude, currentCityName);
+
+})
+
+
+
+
+})
+
+
+let callTheApi = function(currentLatitudeX, currentLongitudeY, currentCityZ) {
+    var queryURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + currentLatitudeX + '&lon=' + currentLongitudeY + '&appid=f2e440a79117f6995bf30b0b003b5680&units=metric';
 
     $.ajax({
         url: queryURL,
         method: "GET"
         }).then(function(secondResponse) {
-            var currentTempC = secondResponse.list[0].main.temp;
-            var currentWind = secondResponse.list[0].wind.speed;
-            var currentHumidity = secondResponse.list[0].main.humidity;
-            var thisCity = localStorage.getItem('cityName');
-            $('#today').children('h2').text(thisCity);
-            $('#current-temp').children('span').text(currentTempC);
-            $('#current-wind').children('span').text(currentWind);
-            $('#current-humidity').children('span').text(currentHumidity);
+            console.log(secondResponse);
+            function putYourEyesIn(listIndex) {
+                var currentTempC = secondResponse.list[listIndex].main.temp;
+                var currentWind = (secondResponse.list[listIndex].wind.speed) * 3.6;
+                var currentHumidity = secondResponse.list[listIndex].main.humidity;
+                var thisCity = currentCityZ;
+                var dateTime = secondResponse.list[listIndex].dt_txt;
+                var formattedDateTime = moment(dateTime).format('dddd D MMM h:mm');
+                var iconcode = secondResponse.list[listIndex].weather[0].icon;
+                console.log(iconcode);
+                var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+                var thisArray = [thisCity, formattedDateTime, currentTempC, currentWind, currentHumidity, iconurl];
+
+                
+                console.log(thisArray);
+                return thisArray;
+
+                
+            }
+            
+           var todayArray =  putYourEyesIn(0);
+
+           var oneDayFromNowArray = putYourEyesIn(8);
+           var twoDaysFromNowArray = putYourEyesIn(16);
+           var threeDaysFromNowArray = putYourEyesIn(24);
+           var fourDaysFromNowArray = putYourEyesIn(32);
+           var fiveDaysFromNowArray = putYourEyesIn(39);
+
+
+           $('#today').children('h2').html(`${todayArray[0]} ${todayArray[1]} <div class="icon"><img id="wicon" src=""></div>` );
+                $('#current-temp').children('span').text(todayArray[2]);
+                $('#current-wind').children('span').text(todayArray[3].toFixed(2));
+                $('#current-humidity').children('span').text(todayArray[4]);  
+                $('#wicon').attr('src', todayArray[5]);
+
+
+                for (let index2 = 0; index2 < ($('#forecast').children()).length; index2++) {
+                   var thisCard = $('#forecast').children().eq(index2);
+                   console.log(thisCard);
+                   let dayArray;
+                   switch(index2) {
+                    case 0:
+                    dayArray = oneDayFromNowArray;
+                    break;
+                    case 1:
+                    dayArray = twoDaysFromNowArray;
+                    break;
+                    case 2:
+                    dayArray = threeDaysFromNowArray;
+                    break;
+                    case 3: 
+                    dayArray = fourDaysFromNowArray;
+                    break;
+                    case 4:
+                    dayArray = fiveDaysFromNowArray;
+                    break;
+                   }
+
+                var hello = thisCard.first();
+                console.log(hello);
+                var goodbye = thisCard.children().first();
+                console.log(goodbye);
+                goodbye.text(dayArray[1]);
+
+                var cardBody = thisCard.children().eq(1);
+                console.log(cardBody);
+                var imgDiv = cardBody.children().first().children().first().children().first();
+                console.log(imgDiv);
+                imgDiv.attr('src', dayArray[5]);
+
+                var tempP = cardBody.children().eq(1);
+                var windP = cardBody.children().eq(2);
+                var humidityP = cardBody.children().eq(3);
+
+                tempP.text(`Temp:${dayArray[2].toFixed(1)} °C`);
+                windP.text(`Wind:${dayArray[3].toFixed(1)} KPH`);
+                humidityP.text(`Humidity:${dayArray[4]} `);
+                //    console.log(dayArray);
+                //    console.log('---------------');
+                //    console.log(thisCard);
+                //    $(thisCard).first().text(dayArray[1]);
+                //    $(thisCard).children().eq(1).children();
+                
+                //    $(thisCard).children().eq(1).children().eq(0).first().first().attr('src', dayArray[5]);
+                   
+                //    $(thisCard).children().eq(1).children().eq(1).html(`<p class="card-text">Temp: ${dayArray[2]} </p>`);
+                //    $(thisCard).children().eq(1).children().eq(2).html(`Wind: ${dayArray[3]}`);
+                //    $(thisCard).children().eq(1).children().eq(3).html(`Wind: ${dayArray[4]}`);
+                   //$(thisIcon).first().attr('src', dayArray[5])
+                }
+          
+
+
         console.log(secondResponse);
-        console.log(`temp: ${currentTempC},   
-        humidity: ${currentHumidity}, 
-        wind: ${currentWind}`);
-        var iconcode = secondResponse.list[0].weather[0].icon;
-        console.log(iconcode);
-        var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-        $('#wicon').attr('src', iconurl);
+        // console.log(`temp: ${currentTempC},   
+        // humidity: ${currentHumidity}, 
+        // wind: ${currentWind}`);
+
+
+        
         });
 };
 
-callTheApi();
-
-})
 
 
 
 
-})
 
 
 
-$('.btn-styled').on('click', function(event) {
-    event.preventDefault();
-    var queryCity = $(this).text();
-    for (let i = 0; i < cities.length; i++)
-})
+
+
+
+
+
+
+// The reason why I want to call the API every time is because each time the person clicks one of the buttons, you want fresh weather updates. Say if someone clicks the buttons hours apart, you don't want the forecast from hours ago, you want the present forecast.
+function displayWeatherInfo() {
+    var index = $(this).attr('data-number');
+    var clickedCity = $(this).attr('data-name')
+    var grabbedLat = cities[index].currentLatitude;
+    var grabbedLong = cities[index].currentLongitude;
+    callTheApi(grabbedLat, grabbedLong, clickedCity);
+
+    console.log(grabbedLat);
+    console.log(grabbedLong);
+
+}
+
+$(document).on('click', ".btn-styled", displayWeatherInfo); 
