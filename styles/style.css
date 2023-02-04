@@ -46,11 +46,21 @@ body {
 }
 #search-button {
     color: white;
-    background: rgb(93, 163, 187);
+    background: rgb(12, 243, 32);
 }
 #search-button:hover {
     color: white;
-    background: rgb(100, 100, 228);
+    background: rgba(12, 243, 32, 0.7);
+}
+
+
+#clear-button {
+    color: white;
+    background: rgb(243, 12, 12);
+}
+#clear-button:hover {
+    color: white;
+    background: rgba(243, 12, 12, 0.7);
 }
 
 #today {

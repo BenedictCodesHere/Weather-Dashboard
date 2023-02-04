@@ -5,8 +5,14 @@
 // $(button).addClass('btn btn-styled')
 // $(button).text('LONDON');
 // $(button).appendTo('.list-group');
-
 var cities = [];
+
+if (localStorage.getItem('cities') != null) {
+    var newCities = JSON.parse(localStorage.getItem('cities'));
+    console.log(newCities);
+    cities = newCities;
+}
+
 
 $('.form').on('submit', function(event) {
     event.preventDefault();
@@ -15,7 +21,13 @@ $('.form').on('submit', function(event) {
     
 })
 
-
+$('#clear-button').on('click', function(event) {
+    event.preventDefault();
+    localStorage.removeItem('cities');
+    cities = [];
+    $('.list-group').empty();
+    alert('cleared');
+})
 
 $('#search-button').on('click', function(event) {
 event.preventDefault();
@@ -54,8 +66,10 @@ var currentCity = {
 cities.push(currentCity);
 
 console.log(cities);
+localStorage.setItem('cities', JSON.stringify(cities));
 
 function renderButtons() {
+
 
     $('.list-group').empty();
 
@@ -169,9 +183,9 @@ let callTheApi = function(currentLatitudeX, currentLongitudeY, currentCityZ) {
                 var windP = cardBody.children().eq(2);
                 var humidityP = cardBody.children().eq(3);
 
-                tempP.text(`Temp:${dayArray[2].toFixed(1)} °C`);
-                windP.text(`Wind:${dayArray[3].toFixed(1)} KPH`);
-                humidityP.text(`Humidity:${dayArray[4]} `);
+                tempP.text(`Temp: ${dayArray[2].toFixed(1)} °C`);
+                windP.text(`Wind: ${dayArray[3].toFixed(1)} KPH`);
+                humidityP.text(`Humidity: ${dayArray[4]} `);
                 //    console.log(dayArray);
                 //    console.log('---------------');
                 //    console.log(thisCard);
