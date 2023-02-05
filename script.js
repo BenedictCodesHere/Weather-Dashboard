@@ -72,6 +72,14 @@ method: "GET"
     var evaluatingCity = firstResponse[0].name;
     const checkIt = allCityNames.find(name => name === evaluatingCity)
     if (checkIt != undefined) {
+        $('.form-input').val('');
+        const foundIndex = allCityNames.findIndex(name => name === evaluatingCity);
+        var cityExists = cities[foundIndex].currentCityName;
+
+        var grabbedLatTime = cities[foundIndex].currentLatitude;
+    var grabbedLongTime = cities[foundIndex].currentLongitude;
+    callTheApi(grabbedLatTime, grabbedLongTime, cityExists);
+    
         return;
     }
         
@@ -131,7 +139,7 @@ let callTheApi = function(currentLatitudeX, currentLongitudeY, currentCityZ) {
                 var currentHumidity = secondResponse.list[listIndex].main.humidity;
                 var thisCity = currentCityZ;
                 var dateTime = secondResponse.list[listIndex].dt_txt;
-                var formattedDateTime = moment(dateTime).format('dddd D MMM h:mm');
+                var formattedDateTime = moment(dateTime).format('dddd D MMM hh:mm');
                 var iconcode = secondResponse.list[listIndex].weather[0].icon;
                 console.log(iconcode);
                 var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
