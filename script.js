@@ -161,7 +161,7 @@ let callTheApi = function(currentLatitudeX, currentLongitudeY, currentCityZ) {
                 var currentHumidity = secondResponse.list[listIndex].main.humidity;
                 var thisCity = currentCityZ;
                 var dateTime = secondResponse.list[listIndex].dt_txt;
-                var formattedDateTime = moment(dateTime).format('dddd D MMM hh:mm');
+                var formattedDateTime = moment(dateTime).format('dddd D MMM hh:mm A');
                 var iconcode = secondResponse.list[listIndex].weather[0].icon;
                 console.log(iconcode);
                 var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
@@ -176,11 +176,11 @@ let callTheApi = function(currentLatitudeX, currentLongitudeY, currentCityZ) {
             
            var todayArray =  putYourEyesIn(0);
 
-           var oneDayFromNowArray = putYourEyesIn(8);
-           var twoDaysFromNowArray = putYourEyesIn(16);
-           var threeDaysFromNowArray = putYourEyesIn(24);
-           var fourDaysFromNowArray = putYourEyesIn(32);
-           var fiveDaysFromNowArray = putYourEyesIn(39);
+           var oneDayFromNowArray = putYourEyesIn(4);
+           var twoDaysFromNowArray = putYourEyesIn(12);
+           var threeDaysFromNowArray = putYourEyesIn(20);
+           var fourDaysFromNowArray = putYourEyesIn(28);
+           var fiveDaysFromNowArray = putYourEyesIn(36);
 
 
            $('#today').children('h2').html(`${todayArray[0]} ${todayArray[1]} <div class="icon"><img id="wicon" src=""></div>` );
