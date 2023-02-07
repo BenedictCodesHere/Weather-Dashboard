@@ -1,4 +1,22 @@
-// 
+function addMap(lat, long) {
+    var mapsURL = `https://www.google.com/maps/embed/v1/view?key=AIzaSyD6OKZYlqBFxAlP8xkCF_DF9km2KddZUa4&center=${lat},${long}&zoom=11&maptype=satellite`
+
+    var iFrame = $(`<iframe
+    width="450"
+    height="250"
+    frameborder="0" style="border:0"
+    referrerpolicy="no-referrer-when-downgrade"
+    src="${mapsURL}"
+    allowfullscreen>
+    </iframe>`)
+    
+    $('#map').empty();
+    iFrame.appendTo('#map');
+}
+
+
+
+
 
 
 // var button = $('<button>');
@@ -87,6 +105,8 @@ method: "GET"
     console.log(firstResponse);
 console.log(firstResponse[0].lat)
 
+
+
 localStorage.setItem('cityName', firstResponse[0].name);
 localStorage.setItem('latitude', firstResponse[0].lat);
 localStorage.setItem('longitude', firstResponse[0].lon);
@@ -94,6 +114,8 @@ localStorage.setItem('longitude', firstResponse[0].lon);
 var currentCityName = localStorage.getItem('cityName');
 var currentLatitude = localStorage.getItem('latitude');
 var currentLongitude = localStorage.getItem('longitude');
+
+addMap(currentLatitude, currentLongitude);
 
 var currentCity = {
     currentCityName: currentCityName,
@@ -260,6 +282,7 @@ function displayWeatherInfo() {
     var clickedCity = $(this).attr('data-name')
     var grabbedLat = cities[index].currentLatitude;
     var grabbedLong = cities[index].currentLongitude;
+    addMap(grabbedLat, grabbedLong);
     callTheApi(grabbedLat, grabbedLong, clickedCity);
 
     console.log(grabbedLat);
