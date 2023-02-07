@@ -9,6 +9,7 @@ Using the OpenWeatherMap API to create a 5-day forecast page for major European 
 This is an application which enables a user to search for the 5-day weather forecast of a city. It keeps track of the user's searches, and populates them to the left-hand side of the page, as clickable buttons.
 
 The application makes use of Bootstrap, jQuery, and two APIs from OpenWeatherMap.
+Also embedded is the Google Maps Embed API.
 
 ## Installation
 
@@ -20,6 +21,7 @@ The way to use the deployed application is to:
 1. Search in the search field for a city.
 2. The current weather is displayed.
 3. Underneath this, you have the five-day forecast for the weather.
+4. Beneath the five-day forecast, you have the Google Maps Embed showing a satellite view of the city.
 4. You can search for another city, or alternatively click one of the buttons to get the forecast for your saved searches.
 ## Screenshot Of Deployed Application
 
